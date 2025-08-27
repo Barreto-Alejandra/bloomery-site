@@ -17,13 +17,6 @@ export default function Hero({
 
   return (
     <section aria-label="Presentación Bloomery" className="relative overflow-hidden bg-bg">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-24 -left-20 h-72 w-72 rounded-full blur-3xl opacity-40
-                        bg-gradient-to-tr from-lavender-200 via-lavender-300 to-lavender-400" />
-        <div className="absolute -bottom-24 -right-16 h-80 w-80 rounded-full blur-3xl opacity-30
-                        bg-gradient-to-tr from-rose via-lavender-200 to-primary" />
-      </div>
-
       <motion.div
         variants={container}
         initial="hidden"
