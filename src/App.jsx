@@ -4,6 +4,7 @@ import { fadeUp } from "./animations/fadeUp";
 
 import Header from "./features/Header";
 import Hero from "./features/Hero";
+import Gallery from "./features/Gallery";
 import Footer from "./features/Footer";
 
 export default function App() {
@@ -13,7 +14,8 @@ export default function App() {
     <div className="min-h-screen bg-bg text-ink">
       <Header />
       <main id="main">
-        <section id="hero"><Hero /></section>
+        <Hero />
+        <Gallery />
       </main>
       <Footer />
     </div>
