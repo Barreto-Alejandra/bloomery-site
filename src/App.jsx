@@ -5,6 +5,7 @@ import { fadeUp } from "./animations/fadeUp";
 import Header from "./features/Header";
 import Hero from "./features/Hero";
 import Gallery from "./features/Gallery";
+import BenefitsMarquee from "./features/BenefitsMarquee";
 import Footer from "./features/Footer";
 
 export default function App() {
@@ -16,6 +17,7 @@ export default function App() {
       <main id="main">
         <Hero />
         <Gallery />
+        <BenefitsMarquee />
       </main>
       <Footer />
     </div>

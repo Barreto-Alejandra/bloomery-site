@@ -187,7 +187,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-10 pt-6 border-t border-border text-xs text-muted flex flex-col sm:flex-row gap-3 sm:items-center justify-between">
-          <p>© {new Date().getFullYear()} Bloomery. Todos los derechos reservados.</p>
+          <p>© {new Date().getFullYear()} Bloomery.</p>
           <div className="flex gap-4">
             <a className="hover:underline" href="#terminos">Términos</a>
             <a className="hover:underline" href="#privacidad">Privacidad</a>
