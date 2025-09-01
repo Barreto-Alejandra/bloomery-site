@@ -6,6 +6,7 @@ import Header from "./features/Header";
 import Hero from "./features/Hero";
 import Gallery from "./features/Gallery";
 import BenefitsMarquee from "./features/BenefitsMarquee";
+import WhyUs from "./features/WhyUs";
 import Footer from "./features/Footer";
 
 export default function App() {
@@ -18,6 +19,7 @@ export default function App() {
         <Hero />
         <Gallery />
         <BenefitsMarquee />
+        <WhyUs />
       </main>
       <Footer />
     </div>
