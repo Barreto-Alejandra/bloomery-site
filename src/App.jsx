@@ -1,6 +1,6 @@
-import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { fadeUp } from "./animations/fadeUp";
+import { useReducedMotion } from "framer-motion";
+import { useLenis } from "./lib/useLenis";
 
 import Header from "./features/Header";
 import Hero from "./features/Hero";
@@ -14,6 +14,8 @@ import Footer from "./features/Footer";
 
 export default function App() {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.2 });
+  const reduce = useReducedMotion();
+  useLenis({ enabled: !reduce });
 
   return (
     <div className="min-h-screen bg-bg text-ink">
