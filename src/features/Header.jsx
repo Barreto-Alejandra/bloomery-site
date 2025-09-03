@@ -1,10 +1,12 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 const LINKS = [
-  { href: "#catalogo", label: "Catálogo" },
-  { href: "#sobre", label: "Sobre" },
-  { href: "#contacto", label: "Contacto" },
+  { href: "#catalogo",    label: "Catálogo" },
+  { href: "#beneficios",  label: "Beneficios" },
+  { href: "#porque",      label: "Por qué elegirnos" },
+  { href: "#testimonios", label: "Testimonios" },
+  { href: "#contacto",    label: "Contacto" },
 ];
 
 export default function Header() {
@@ -22,20 +24,18 @@ export default function Header() {
   useEffect(() => {
     const onKey = (e) => e.key === "Escape" && setOpen(false);
     document.addEventListener("keydown", onKey);
-    document.body.style.overflow = open ? "hidden" : "";
+    document.body.classList.toggle("overflow-hidden", open);
     return () => {
       document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
+      document.body.classList.remove("overflow-hidden");
     };
   }, [open]);
 
   const headerClasses = useMemo(
     () =>
       [
-        "sticky top-0 z-50 transition",
-        scrolled
-          ? "bg-bg/70 backdrop-blur border-b border-border"
-          : "bg-transparent",
+        "sticky top-0 z-50 transition h-16 lg:h-20",
+        scrolled ? "bg-bg/70 backdrop-blur border-b border-border" : "bg-transparent",
       ].join(" "),
     [scrolled]
   );
@@ -58,18 +58,16 @@ export default function Header() {
     <>
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[60] focus:bg-ink focus:text-bg px-3 py-2 rounded-md"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[70] focus:bg-ink focus:text-bg px-3 py-2 rounded-md"
       >
         Saltar al contenido
       </a>
 
       <header className={headerClasses}>
-        <div className="max-w-6xl lg:max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-12 xl:px-20 h-16 lg:h-20 flex items-center justify-between">
-          <a href="#hero" className="inline-flex items-center gap-2" aria-label="Inicio">
+        <div className="max-w-6xl lg:max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-12 xl:px-20 h-full flex items-center justify-between">
+          <a href="#hero" className="inline-flex items-center gap-2" aria-label="Ir al inicio">
             <span className="inline-block w-3 h-3 rounded-full bg-gold" />
-            <span className="text-xl lg:text-2xl font-extrabold tracking-tight text-ink">
-              Bloomery
-            </span>
+            <span className="text-xl lg:text-2xl font-extrabold tracking-tight text-ink">Bloomery</span>
           </a>
 
           <nav className="hidden lg:block" aria-label="Navegación principal">
@@ -87,30 +85,23 @@ export default function Header() {
             </ul>
           </nav>
 
-          <div className="hidden lg:block">
-            <a
-              href="#catalogo"
-              className="inline-flex items-center justify-center rounded-full bg-primary hover:bg-primary-600
-                         text-white px-5 py-2.5 text-sm transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/50"
-            >
-              Ver catálogo
-            </a>
-          </div>
-
           <button
             onClick={() => setOpen((v) => !v)}
             className="lg:hidden inline-flex items-center justify-center w-10 h-10 rounded-full border border-border bg-surface
-                       hover:border-primary hover:text-primary transition focus:outline-none focus:ring-2 focus:ring-primary/40"
+                       hover:border-primary hover:text-primary transition focus:outline-none focus:ring-2 focus:ring-primary/40 z-[80]"
             aria-expanded={open}
             aria-controls="mobile-menu"
-            aria-label="Abrir menú"
+            aria-label={open ? "Cerrar menú" : "Abrir menú"}
           >
-            <span className="sr-only">Abrir menú</span>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <span className="sr-only">{open ? "Cerrar menú" : "Abrir menú"}</span>
+            <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
               {open ? (
-                <path d="M18.3 5.71 12 12.01l6.3 6.29-1.41 1.41L10.59 13.4l-6.3 6.3-1.41-1.42 6.29-6.29-6.3-6.3L4.3 4.3l6.29 6.3L16.9 4.3z"/>
+                <g stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                  <path d="M6 6l12 12" />
+                  <path d="M18 6l-12 12" />
+                </g>
               ) : (
-                <path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/>
+                <path fill="currentColor" d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z" />
               )}
             </svg>
           </button>
@@ -120,41 +111,36 @@ export default function Header() {
           {open && (
             <motion.div
               id="mobile-menu"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Menú móvil"
               key="mobile"
               variants={mobilePanel}
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="lg:hidden border-t border-border bg-bg/95 backdrop-blur"
+              className="fixed inset-0 z-[60] bg-bg/95 backdrop-blur px-4 sm:px-6 pt-24"
+              onClick={() => setOpen(false)}
             >
-              <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6">
-                <nav aria-label="Navegación móvil">
-                  <ul className="flex flex-col gap-4">
-                    {LINKS.map((link) => (
-                      <li key={link.href}>
-                        <a
-                          href={link.href}
-                          className="block text-ink text-base py-2"
-                          onClick={() => setOpen(false)}
-                        >
-                          {link.label}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </nav>
-
-                <div className="mt-6">
-                  <a
-                    href="#catalogo"
-                    onClick={() => setOpen(false)}
-                    className="inline-flex items-center justify-center rounded-full bg-primary hover:bg-primary-600
-                               text-white px-6 py-3 text-sm transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/50"
-                  >
-                    Ver catálogo
-                  </a>
-                </div>
-              </div>
+              <nav
+                className="max-w-md mx-auto"
+                aria-label="Navegación móvil"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <ul className="flex flex-col gap-2">
+                  {LINKS.map((link) => (
+                    <li key={link.href}>
+                      <a
+                        href={link.href}
+                        className="block text-lg px-6 py-4 text-ink hover:bg-bg/80 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30"
+                        onClick={() => setOpen(false)}
+                      >
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
             </motion.div>
           )}
         </AnimatePresence>
