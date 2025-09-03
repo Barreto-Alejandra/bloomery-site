@@ -8,6 +8,8 @@ import Gallery from "./features/Gallery";
 import BenefitsMarquee from "./features/BenefitsMarquee";
 import WhyUs from "./features/WhyUs";
 import Contact from "./features/Contact";
+import Testimonials from "./features/Testimonials";
+import Instagram from "./features/Instagram";
 import Footer from "./features/Footer";
 
 export default function App() {
@@ -22,6 +24,8 @@ export default function App() {
         <BenefitsMarquee />
         <WhyUs />
         <Contact />
+        <Testimonials />
+        <Instagram />
       </main>
       <Footer />
     </div>

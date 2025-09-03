@@ -35,3 +35,14 @@
 
 
 html { scroll-behavior: smooth; }
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.testi-swiper .swiper-wrapper {
+  align-items: stretch;
+}
+.testi-swiper .swiper-slide {
+  height: auto;
+  display: flex;
+}
