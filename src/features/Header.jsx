@@ -34,22 +34,24 @@ export default function Header() {
   const headerClasses = useMemo(
     () =>
       [
-        "sticky top-0 z-50 transition h-16 lg:h-20",
-        scrolled ? "bg-bg/70 backdrop-blur border-b border-border" : "bg-transparent",
+        "sticky top-0 z-[80] h-16 lg:h-20",
+        "transition-colors duration-300",
+        "border-b",
+        (scrolled || open)
+          ? "bg-bg/90 supports-[backdrop-filter]:bg-bg/70 supports-[backdrop-filter]:backdrop-blur border-border"
+          : "bg-transparent border-transparent",
       ].join(" "),
-    [scrolled]
+    [scrolled, open]
   );
 
   const mobilePanel = {
     hidden: { opacity: 0, y: -8 },
     visible: {
-      opacity: 1,
-      y: 0,
+      opacity: 1, y: 0,
       transition: { duration: prefersReducedMotion ? 0 : 0.22, ease: "easeOut" },
     },
     exit: {
-      opacity: 0,
-      y: -8,
+      opacity: 0, y: -8,
       transition: { duration: prefersReducedMotion ? 0 : 0.18, ease: "easeIn" },
     },
   };
@@ -58,7 +60,7 @@ export default function Header() {
     <>
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[70] focus:bg-ink focus:text-bg px-3 py-2 rounded-md"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[90] focus:bg-ink focus:text-bg px-3 py-2 rounded-md"
       >
         Saltar al contenido
       </a>
@@ -86,9 +88,9 @@ export default function Header() {
           </nav>
 
           <button
-            onClick={() => setOpen((v) => !v)}
+            onClick={() => setOpen(v => !v)}
             className="lg:hidden inline-flex items-center justify-center w-10 h-10 rounded-full border border-border bg-surface
-                       hover:border-primary hover:text-primary transition focus:outline-none focus:ring-2 focus:ring-primary/40 z-[80]"
+                       hover:border-primary hover:text-primary transition focus:outline-none focus:ring-2 focus:ring-primary/40 z-[90]"
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label={open ? "Cerrar menú" : "Abrir menú"}
@@ -106,33 +108,35 @@ export default function Header() {
             </svg>
           </button>
         </div>
+      </header>
 
-        <AnimatePresence>
-          {open && (
-            <motion.div
-              id="mobile-menu"
-              role="dialog"
-              aria-modal="true"
-              aria-label="Menú móvil"
-              key="mobile"
-              variants={mobilePanel}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              className="fixed inset-0 z-[60] bg-bg/95 backdrop-blur px-4 sm:px-6 pt-24"
-              onClick={() => setOpen(false)}
-            >
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            id="mobile-menu"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Menú móvil"
+            key="mobile"
+            variants={mobilePanel}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            className="fixed inset-0 z-[70] bg-bg supports-[backdrop-filter]:bg-bg supports-[backdrop-filter]:backdrop-blur"
+            onClick={() => setOpen(false)}
+          >
+            <div className="pt-20 lg:pt-24 h-full px-4 sm:px-6">
               <nav
-                className="max-w-md mx-auto"
+                className="max-w-md mx-auto w-full"
                 aria-label="Navegación móvil"
                 onClick={(e) => e.stopPropagation()}
               >
-                <ul className="flex flex-col gap-2">
-                  {LINKS.map((link) => (
+                <ul className="flex flex-col gap-1">
+                  {LINKS.map(link => (
                     <li key={link.href}>
                       <a
                         href={link.href}
-                        className="block text-lg px-6 py-4 text-ink hover:bg-bg/80 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30"
+                        className="block text-lg px-6 py-4 text-ink hover:bg-ink/5 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30"
                         onClick={() => setOpen(false)}
                       >
                         {link.label}
@@ -141,10 +145,10 @@ export default function Header() {
                   ))}
                 </ul>
               </nav>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </header>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }
