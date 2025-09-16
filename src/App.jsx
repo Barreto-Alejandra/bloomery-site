@@ -18,7 +18,7 @@ export default function App() {
   useLenis({ enabled: !reduce });
 
   return (
-    <div className="min-h-screen bg-bg text-ink">
+    <div>
       <Header />
       <main id="main">
         <Hero />

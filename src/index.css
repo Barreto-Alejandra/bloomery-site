@@ -31,10 +31,10 @@
   --color-leaf: #78C9A4;
 
   --shadow-card: 0 10px 30px 0 rgb(111 81 232 / 0.12);
+
+  --swiper-theme-color: var(--color-primary);
 }
 
-
-html { scroll-behavior: smooth; }
 
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -45,4 +45,23 @@ html { scroll-behavior: smooth; }
 .testi-swiper .swiper-slide {
   height: auto;
   display: flex;
+}
+
+.swiper-pagination-bullet {
+  width: 8px;
+  height: 8px;
+  background: var(--color-border) !important;
+  opacity: 1;
+  transition: background-color .2s ease, transform .2s ease;
+}
+
+.swiper-pagination-bullet-active {
+  background: var(--color-primary) !important;
+  transform: scale(1.1);
+}
+
+.swiper-pagination-bullet:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 9999px;
 }

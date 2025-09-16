@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import { Pagination } from "swiper/modules";
 import { motion } from "framer-motion";
 import { fadeUp } from "../animations/fadeUp";
 
@@ -47,14 +47,8 @@ function Card({ item }) {
 }
 
 export default function Gallery({ items = defaultItems, title = "Bouquets destacados" }) {
-  const headingId = "galeria-heading";
-
   return (
-    <section
-      id="catalogo"
-      aria-labelledby={headingId}
-      className="bg-bg py-16 lg:py-24"
-    >
+    <section id="catalogo" className="bg-bg py-16 lg:py-24">
       <motion.div
         variants={fadeUp}
         initial="hidden"
@@ -62,9 +56,8 @@ export default function Gallery({ items = defaultItems, title = "Bouquets destac
         viewport={{ once: true, amount: 0.2 }}
         className="max-w-6xl lg:max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-12 xl:px-20"
       >
-        {/* Encabezado de la sección (sin <header/>) */}
         <div className="mb-8 lg:mb-12">
-          <h2 id={headingId} className="text-2xl md:text-3xl font-extrabold tracking-tight text-ink">
+          <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight text-ink">
             {title}
           </h2>
           <p className="mt-2 text-muted max-w-prose">
@@ -72,14 +65,14 @@ export default function Gallery({ items = defaultItems, title = "Bouquets destac
           </p>
         </div>
 
-        <div className="lg:hidden">
+        <div className="block md:hidden">
           <Swiper
-            modules={[Navigation, Pagination, Autoplay]}
+            modules={[Pagination]}
             slidesPerView={1.1}
             spaceBetween={16}
             pagination={{ clickable: true }}
-            autoplay={{ delay: 3500, disableOnInteraction: false }}
-            style={{ paddingBottom: "2rem" }}
+            className="gallery-swiper"
+            style={{ paddingBottom: "2.5rem" }}
           >
             {items.map((item) => (
               <SwiperSlide key={item.id}>
@@ -89,7 +82,7 @@ export default function Gallery({ items = defaultItems, title = "Bouquets destac
           </Swiper>
         </div>
 
-        <div className="hidden lg:grid grid-cols-3 gap-8">
+        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {items.map((item) => (
             <motion.div
               key={item.id}
