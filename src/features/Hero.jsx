@@ -1,15 +1,17 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { fadeUp } from "../animations/fadeUp";
 
+const BASE = import.meta.env.BASE_URL;
+
 const container = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.12 } },
 };
 
 export default function Hero({
-  imageSrc = "",
+  imageSrc = `${BASE}assets/hero-flower.jpg`,
   alt = "Bouquet Bloomery con tonos lavanda y crema",
-  videoSrc = "/assets/hero-video1.mp4",
+  videoSrc = `${BASE}assets/hero-video1.mp4`,
 }) {
   const prefersReducedMotion = useReducedMotion();
   const showVideo = Boolean(videoSrc);
@@ -28,8 +30,8 @@ export default function Hero({
         className="
           relative mx-auto 
           w-[92%] 
-          max-w-[22rem] sm:max-w-[30rem] md:max-w-[40rem]  /* límites antes de 1024px */
-          lg:max-w-[90rem]                                /* a partir de 1024px */
+          max-w-[22rem] sm:max-w-[30rem] md:max-w-[40rem]
+          lg:max-w-[90rem]
           px-0 lg:px-12 
           py-16 lg:py-28
         "
@@ -95,7 +97,7 @@ export default function Hero({
 
           <motion.figure
             variants={fadeUp}
-            className="relative aspect-[4/5] w-full max-w-[520px] mx-auto lg:ml-auto  /* 👈 centrado antes de 1024px */
+            className="relative aspect-[4/5] w-full max-w-[520px] mx-auto lg:ml-auto
                        rounded-3xl bg-surface border border-border shadow-[var(--shadow-card)] overflow-hidden"
           >
             {showVideo ? (
@@ -116,7 +118,10 @@ export default function Hero({
                 whileHover={
                   prefersReducedMotion
                     ? {}
-                    : { scale: 1.03, transition: { duration: 0.35, ease: "easeOut" } }
+                    : {
+                        scale: 1.03,
+                        transition: { duration: 0.35, ease: "easeOut" },
+                      }
                 }
                 className="block h-full w-full"
               >
@@ -131,7 +136,7 @@ export default function Hero({
 
             <figcaption
               className="pointer-events-none absolute left-4 bottom-4
-                                   rounded-full bg-bg/80 backdrop-blur px-3 py-1.5 text-xs text-ink border border-border"
+                         rounded-full bg-bg/80 backdrop-blur px-3 py-1.5 text-xs text-ink border border-border"
             >
               Colección Primavera · 2025
             </figcaption>

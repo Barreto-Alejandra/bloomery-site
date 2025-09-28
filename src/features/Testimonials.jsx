@@ -7,6 +7,9 @@ const TESTIMONIALS = [
   { id: "t1", name: "Cliente A",      quote: "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", role: "Asunción",        avatar: "" },
   { id: "t2", name: "Cliente B", quote: "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", role: "Encarnación", avatar: "" },
   { id: "t3", name: "Cliente C",   quote: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.", role: "Ciudad del Este", avatar: "" },
+  { id: "t4", name: "Cliente A",      quote: "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", role: "Asunción",        avatar: "" },
+  { id: "t5", name: "Cliente B", quote: "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", role: "Encarnación", avatar: "" },
+  { id: "t6", name: "Cliente C",   quote: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.", role: "Ciudad del Este", avatar: "" },
 ];
 
 function Card({ t }) {
