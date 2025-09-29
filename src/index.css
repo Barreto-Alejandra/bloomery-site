@@ -35,6 +35,18 @@
   --swiper-theme-color: var(--color-primary);
 }
 
+@layer base {
+  a[href] { @apply cursor-pointer; }
+
+  button,
+  [role="button"],
+  input[type="button"],
+  input[type="submit"] { @apply cursor-pointer; }
+
+  a[aria-disabled="true"],
+  button[disabled] { @apply cursor-not-allowed pointer-events-none opacity-60; }
+}
+
 
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

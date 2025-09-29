@@ -1,20 +1,49 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+
 import { motion } from "framer-motion";
 import { fadeUp } from "../animations/fadeUp";
 
+const BASE = import.meta.env.BASE_URL;
+const withBase = (p = "") => `${BASE}${String(p).replace(/^\/+/, "")}`;
+
 const defaultItems = [
-  { id: "ligereza", name: "Ligereza", img: "/assets/gallery-1.jpg", alt: "Bouquet Ligereza en tonos lavanda y crema", price: "Gs. 180.000" },
-  { id: "blancanieve", name: "Blancanieve", img: "/assets/gallery-2.jpg", alt: "Bouquet Blancanieve con rosas blancas y toques dorados", price: "Gs. 210.000" },
-  { id: "primavera", name: "Primavera", img: "/assets/gallery-3.jpg", alt: "Bouquet Primavera con flores mixtas en tonos pastel", price: "Gs. 200.000" },
+  {
+    id: "ligereza",
+    name: "Ligereza",
+    img: withBase("assets/gallery-1.jpg"),
+    alt: "Bouquet Ligereza en tonos lavanda y crema",
+    price: "Gs. 180.000",
+  },
+  {
+    id: "blancanieve",
+    name: "Blancanieve",
+    img: withBase("assets/gallery-2.jpg"),
+    alt: "Bouquet Blancanieve con rosas blancas y toques dorados",
+    price: "Gs. 210.000",
+  },
+  {
+    id: "primavera",
+    name: "Primavera",
+    img: withBase("assets/gallery-3.jpg"),
+    alt: "Bouquet Primavera con flores mixtas en tonos pastel",
+    price: "Gs. 200.000",
+  },
 ];
 
 function Card({ item }) {
+  const imgSrc =
+    item?.img?.startsWith("http") || item?.img?.startsWith(BASE)
+      ? item.img
+      : withBase(item.img);
+
   return (
     <article className="group bg-surface border border-border rounded-2xl overflow-hidden shadow-[var(--shadow-card)]">
       <div className="relative aspect-[4/5] overflow-hidden">
         <img
-          src={item.img}
+          src={imgSrc}
           alt={item.alt}
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 will-change-transform"
           loading="lazy"
@@ -47,6 +76,8 @@ function Card({ item }) {
 }
 
 export default function Gallery({ items = defaultItems, title = "Bouquets destacados" }) {
+  const enoughForLoop = items.length > 3;
+
   return (
     <section id="catalogo" className="bg-bg py-16 lg:py-24">
       <motion.div
@@ -64,38 +95,33 @@ export default function Gallery({ items = defaultItems, title = "Bouquets destac
             Selección curada para regalar o hacer florecer tu espacio.
           </p>
         </div>
-
-        <div className="block md:hidden">
-          <Swiper
-            modules={[Pagination]}
-            slidesPerView={1.1}
-            spaceBetween={16}
-            pagination={{ clickable: true }}
-            className="gallery-swiper"
-            style={{ paddingBottom: "2.5rem" }}
-          >
-            {items.map((item) => (
-              <SwiperSlide key={item.id}>
-                <Card item={item} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
-
-        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {items.map((item) => (
-            <motion.div
-              key={item.id}
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-            >
-              <Card item={item} />
-            </motion.div>
-          ))}
-        </div>
       </motion.div>
+
+      <div className="max-w-6xl lg:max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-12 xl:px-20">
+        <Swiper
+          modules={[Pagination]}
+          pagination={{ clickable: true }}
+          watchOverflow={true}
+          loop={enoughForLoop}
+          slidesPerView={1.1}
+          spaceBetween={16}
+          breakpoints={{
+            640: { slidesPerView: 1.4, spaceBetween: 18 },
+            768: { slidesPerView: 2, spaceBetween: 20 },
+            1024: { slidesPerView: 3, spaceBetween: 24 },
+          }}
+          className="gallery-swiper"
+          style={{ paddingBottom: "2.5rem" }}
+          aria-label="Galería de bouquets"
+        >
+          {items.map((item) => (
+            <SwiperSlide key={item.id}>
+              <Card item={item} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
     </section>
   );
 }
+
